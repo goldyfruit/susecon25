@@ -14,13 +14,11 @@ LABEL org.opencontainers.image.version="${VERSION}"
 
 WORKDIR /app
 
-COPY ./requirements.txt /app/requirements.txt
-
 RUN zypper --non-interactive in libopenssl1_1 \
     && if [ "${ALPHA}" == "true" ]; then \
-    pip install --no-cache-dir -r /app/requirements.txt --pre; \
+    pip install --no-cache-dir fastapi[standard] pydantic --pre; \
     else \
-    pip install --no-cache-dir -r /app/requirements.txt; \
+    pip install --no-cache-dir fastapi[standard] pydantic; \
     fi \
     && zypper clean all
 
