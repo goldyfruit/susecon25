@@ -1,0 +1,39 @@
+name: Trigger SUSE Multi-Linux Manager build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-image-via-smlm:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v4
+        with:
+          path: "./scripts/requirements.txt"
+
+      - name: Run the Python script
+        working-directory: ./scripts
+        run: |
+          python trigger_smlm_build.py
+        env:
+          SMLM_HOST: ${{ secrets.SMLM_HOST }}
+          SMLM_USER: ${{ secrets.SMLM_USER }}
+          SMLM_PASSWORD: ${{ secrets.SMLM_PASSWORD }}
+
+      - name: Push version change
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Increment version
+          branch: main
