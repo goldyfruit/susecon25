@@ -1,4 +1,4 @@
-FROM registry.suse.com/bci/python:3.12.7
+FROM registry.suse.com/bci/python:3.12
 
 ARG ALPHA=false
 ARG BUILD_DATE=unknown
