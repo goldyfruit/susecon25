@@ -22,6 +22,4 @@ RUN zypper --non-interactive in libopenssl1_1 \
     fi \
     && zypper clean all
 
-ADD main.py /main.py
-
 CMD ["fastapi", "run", "/main.py", "--port", "8000"]
