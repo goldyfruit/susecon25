@@ -12,7 +12,6 @@ LABEL org.opencontainers.image.source="https://github.com/goldyfruit/suma-images
 LABEL org.opencontainers.image.vendor="SUSE"
 LABEL org.opencontainers.image.version="${VERSION}"
 
-
 WORKDIR /app
 
 RUN zypper --non-interactive in libopenssl1_1 \
@@ -23,7 +22,5 @@ RUN zypper --non-interactive in libopenssl1_1 \
     fi \
     && zypper clean all \
     && mkdir -p /app
-
-ADD main.py /main.py
 
 CMD ["fastapi", "run", "main.py", "--port", "8000"]
