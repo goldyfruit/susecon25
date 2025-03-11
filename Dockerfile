@@ -12,7 +12,6 @@ LABEL org.opencontainers.image.source="https://github.com/goldyfruit/suma-images
 LABEL org.opencontainers.image.vendor="SUSE"
 LABEL org.opencontainers.image.version="${VERSION}"
 
-ADD ./app /app
 
 WORKDIR /app
 
@@ -22,6 +21,9 @@ RUN zypper --non-interactive in libopenssl1_1 \
     else \
     pip install --no-cache-dir fastapi[standard] pydantic; \
     fi \
-    && zypper clean all
+    && zypper clean all \
+    && mkdir -p /app
 
-CMD ["fastapi", "run", "app/main.py", "--port", "8000"]
+ADD ./app/main.py /app/main.py
+
+CMD ["fastapi", "run", "main.py", "--port", "8000"]
