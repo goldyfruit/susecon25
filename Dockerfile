@@ -20,7 +20,6 @@ RUN zypper --non-interactive in libopenssl1_1 \
     else \
     pip install --no-cache-dir fastapi[standard] pydantic; \
     fi \
-    && zypper clean all \
-    && mkdir -p /app
+    && zypper clean all
 
-CMD ["fastapi", "run", "main.py", "--port", "8000"]
+CMD ["fastapi", "run", "/app/main.py", "--port", "8000"]
